@@ -1,11 +1,12 @@
 on: push
 name: Build and deploy to gh-pages
 jobs:
-  install:
-    name: Install
+  deploy:
+    name: Build and deploy to gh-pages 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: Checkout
+      uses: actions/checkout@master
     - name: Install
       uses: actions/npm@e7aaefe
       with:
@@ -15,7 +16,8 @@ jobs:
       with:
         args: run build
     - name: Deploy
-      uses: nchaulet/github-action-gh-pages@master
+      uses: JamesIves/github-pages-deploy-action@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLIC_PATH: build
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
