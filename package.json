@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "NODE_ENV=development mocha --require ./test/setupDOM.js --require ignore-styles --recursive",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -27,5 +27,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "chai": "^4.2.0",
+    "chai-enzyme": "^1.0.0-beta.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "gh-pages": "^2.1.1",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^15.1.1",
+    "mocha": "^6.2.0",
+    "sinon": "^7.4.1"
   }
 }
