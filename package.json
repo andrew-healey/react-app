@@ -12,7 +12,9 @@
         "supertest": "^4.0.2"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start":"node backend/index.js",
+        "dev":"npm start && npm run app",
+        "app": "react-scripts start",
         "build": "react-scripts build",
         "test": "NODE_ENV=development mocha --require ./setupDOM.js --require ignore-styles --recursive",
         "eject": "react-scripts eject"
