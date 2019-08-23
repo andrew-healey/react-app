@@ -1,7 +1,8 @@
+module.exports =new Promise((resolve, reject) => {
 const app = require("express")();
 
-const graphql = require("./graphql.js");
+const graphql = await require("./graphql.js");
 
 app.use("/graphiql",graphql(true));
-
-module.exports.default=app;
+  resolve(app);
+});
