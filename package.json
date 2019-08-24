@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "express": "^4.17.1",
         "express-graphql": "^0.9.0",
         "graphql": "^14.5.0",
         "mongoose": "^5.6.10",
@@ -12,8 +13,8 @@
         "supertest": "^4.0.2"
     },
     "scripts": {
-        "start":"node backend/index.js",
-        "dev":"npm start && npm run app",
+        "start": "node backend/index.js",
+        "dev": "npm start && npm run app",
         "app": "react-scripts start",
         "build": "react-scripts build",
         "test": "NODE_ENV=development mocha --require ./setupDOM.js --require ignore-styles --recursive",
