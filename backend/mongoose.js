@@ -1,6 +1,6 @@
-module.exports = new Promise((resolve, reject) => {
+module.exports = new Promise(async (resolve, reject) => {
     const mongoose = require("mongoose");
-    require("dotenv")();
+    require("dotenv").config();
 
     mongoose.connect(process.env.DATABASE.replace(/<password>/, process.env.PASSWORD), {
         useNewUrlParser: true
