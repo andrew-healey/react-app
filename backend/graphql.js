@@ -1,10 +1,22 @@
 module.exports = new Promise(async (resolve, reject) => {
-    const graphql = require("graphql");
-    const graphqlExpress = require("express-graphql");
+  const mongoose = require("mongoose");
+  const {
+    graphqlExpress,
+    graphiqlExpress
+  } = require("graphql-server-express");
+  const {
+    makeExecutableSchema
+  } = require("graphql-tools");
 
-    const mongoose = await require("./mongoose.js");
+  const ObjectId = mongoose.Types.ObjectId;
+  ObjectId.prototype.valueOf = function() {
+    return this.toString();
+  };
 
-    const schema = graphql.buildSchema(`
+  //Import models
+  const {} = await require("./mongoose.js");
+
+  const typeDefs = `
 type Query {
 }
 
@@ -12,23 +24,32 @@ type Mutation{
 }
 
 
-
-
 schema {
   query: Query
   mutation: Mutation
 }
-`);
-    const root = {
-        Query: {},
-        Mutation: {},
-        //Other resolvers go here
-    };
+`;
 
-    resolve((graphiql) =>
-        graphqlExpress({
-            schema,
-            rootValue: root,
-            graphiql
-        }));
+  let name="react-app";
+  const root = {
+    Query:{
+    },
+    Mutation:{
+    },
+    //Add more resolvers here
+  };
+
+  const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers: root
+  });
+
+  resolve((path) => ({
+    graphql: graphqlExpress({
+      schema
+    }),
+    graphiql: graphiqlExpress({
+      endpointURL: path
+    }),
+  }));
 });
