@@ -1,12 +1,9 @@
 module.exports = new Promise(async (resolve, reject) => {
   const mongoose = require("mongoose");
   const {
-    graphqlExpress,
-    graphiqlExpress
-  } = require("graphql-server-express");
-  const {
-    makeExecutableSchema
-  } = require("graphql-tools");
+    ApolloServer,
+    gql
+  } = require("apollo-server-express");
 
   const ObjectId = mongoose.Types.ObjectId;
   ObjectId.prototype.valueOf = function() {
@@ -16,7 +13,7 @@ module.exports = new Promise(async (resolve, reject) => {
   //Import models
   const {} = await require("./mongoose.js");
 
-  const typeDefs = `
+  const typeDefs = gql `
 type Query {
 }
 
@@ -30,26 +27,31 @@ schema {
 }
 `;
 
-  let name="react-app";
-  const root = {
-    Query:{
+  const resolvers = {
+    Query: {
     },
-    Mutation:{
+    Mutation: {
     },
     //Add more resolvers here
   };
 
-  const schema = makeExecutableSchema({
+  const context = ({req})=>{
+    //Set context here
+  };
+
+  const loggedIn=next=>(root,args,context,info)=>{
+    //Check if the user is authenticated
+    
+    return next();
+  };
+
+  const server = new ApolloServer({
     typeDefs,
-    resolvers: root
+    resolvers,
+    context
   });
 
-  resolve((path) => ({
-    graphql: graphqlExpress({
-      schema
-    }),
-    graphiql: graphiqlExpress({
-      endpointURL: path
-    }),
+  resolve((app) => server.applyMiddleware({
+    app
   }));
 });
